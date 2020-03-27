@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1 class="text-primary">Login</h1>
+<div class="jumbotron text-left">
+  <form action="" method="POST">
+    <div class="form-group text-primary">
+      <label>Username</label>
+      <input type="text" name="username" class="form-control" value={{request.form.username}}>
+    </div>
+    <div class="form-group text-primary" >
+      <label>Password</label>
+      <input type="password" name="password" class="form-control" value={{request.form.password}}>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+{% endblock %}
