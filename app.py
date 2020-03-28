@@ -35,17 +35,21 @@ def index():
 def register():
     form = RegisterForm(request.form)
     if request.method == 'POST' and form.validate():
-        name = form.name.data
-        username = form.username.data
-        email = form.email.data
-        password = sha256_crypt.encrypt(str(form.password.data))
+        try:
+            name = form.name.data
+            username = form.username.data
+            email = form.email.data
+            password = sha256_crypt.encrypt(str(form.password.data))
 
-        cur = mysql.connection.cursor()
-        cur.execute('insert into users(name , username , email , password) values(%s , %s , %s , %s)', (name , username , email , password))
-        mysql.connection.commit()
-        cur.close()
-        flash('You are now registered and can log in', 'success')
-        return redirect(url_for('login'))
+            cur = mysql.connection.cursor()
+            cur.execute('insert into users(name , username , email , password) values(%s , %s , %s , %s)', (name , username , email , password))
+            mysql.connection.commit()
+            cur.close()
+            flash('You are now registered and can log in', 'success')
+            return redirect(url_for('login'))
+        except:
+            error = 'Username already exists. Choose another'
+            return render_template('register.html' , error = error , form = form)
     return render_template('register.html' , form=form)
 
 @app.route('/login' , methods=['GET' , 'POST'])
