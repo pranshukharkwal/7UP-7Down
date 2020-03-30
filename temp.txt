@@ -1,0 +1,36 @@
+if request.method == 'GET':   #Generate your referral code
+    username = session['username']
+    ref_code = randomstring()
+    cur = mysql.connection.cursor()
+    result = cur.execute('select id from users where username=%s' , [username])
+    id = cur.fetchone()['id']
+    if id > 0:
+        cur.execute('update referral set referral_code = %s where id = %s', (ref_code , id))
+    else:
+        cur.execute('insert into referral(id , referral_code) values(%s , %s)' , (id , ref_code))
+    mysql.connection.commit()
+
+    result_ref = cur.execute('select * from referral where id = %s' , [id])
+    ref_data = cur.fetchone()
+    cur.close()
+    flash('Your referral code has been generated' , 'success')
+    msg = "Your referral code is " + ref_code
+    return render_template('referral.html' , ref_data = ref_data , msg = msg)
+
+
+
+    <fieldset class="scheduler-border">
+      <<legend>Referral code </legend>
+      <p> You have entered the referral code {{ref_data.referred_by}} </p>
+    </fieldset>
+
+
+
+
+<form method="POST" action="">
+<div class="form-group text-primary">
+<label>Referral Code</label>
+<input type="text" name="ref_by_code" class="form-control" value={{request.form.ref_by_code}}>
+</div>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>

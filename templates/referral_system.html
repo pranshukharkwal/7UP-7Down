@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1 class = text-primary>Referral System</h1>
+  <div class="jumbotron text-center">
+    <div>
+    <img src="https://i.imgur.com/L8sWTAx.png" class="img-thumbnail img-rounded img-responsive" alt="logo">
+    </div>
+    <br>
+    <p class="lead">We have a very exciting referral system which allows you to get free coins by inviting your friends to use the website. The more friends you invite to the website, the more free coins you earn </p>
+    <p class="lead">Get 50 free coins for every referral you make</p>
+    {% if session.logged_in == NULL %}
+    <p class="lead">Login / Register to get started </p>
+    <br>
+      <a href="/register" class="btn btn-primary btn-lg">Register</a>
+      <a href="/login" class="btn btn-success btn-lg">Login</a>
+    {% else %}
+    <a href="/referral" class="btn btn-success btn-lg">Start referring</a>
+    {% endif %}
+  </div>
+{% endblock %}
