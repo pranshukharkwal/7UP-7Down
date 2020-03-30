@@ -211,7 +211,18 @@ def update():
         # final_result = cur.fetchone()
         cur.close()
         return redirect(url_for('dashboard'))
-        
+
+@app.route('/leaderboard')
+def leaderboard():
+    cur = mysql.connection.cursor()
+    result = cur.execute('select * from users')
+    data = list(cur.fetchall())
+    data.sort(key = lambda x: x['coins'] , reverse=True)
+    if len(data) > 10:
+        data = data[0:10]
+
+    return render_template('leaderboard.html' , data=data)
+
 @app.route('/logout')
 @is_logged_in
 def logout():
