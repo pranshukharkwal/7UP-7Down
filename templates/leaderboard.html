@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1 class="text-primary"> Leaderboard </h1>
+<div class="jumbotron text-left">
+
+<table class="table table-striped">
+<tr>
+<th> Name </th>
+<th> Username </th>
+<th> Coins </th>
+</tr>
+
+{% for item in data %}
+<tr>
+<td>{{item.name}}</td>
+<td>{{item.username}}</td>
+<td>{{item.coins}}</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+{% endblock %}
