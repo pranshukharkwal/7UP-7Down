@@ -98,6 +98,7 @@ def login():
 @app.route('/referral' , methods=['GET' , 'POST'])
 @is_logged_in
 def referral():
+    
     if request.method == 'POST':  #Enter someone's referral code
 
         username = session['username']
