@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash, redirect, url_for, session, request, logging
 from flask_mysqldb import MySQL
 from wtforms import Form, StringField, TextAreaField, PasswordField, validators
-from passlib.hash import sha256_crypt
+from passlib.hash import sha256_crypt # Encrypt password
 from functools import wraps
 import string
 import random
@@ -181,16 +181,37 @@ def referral():
 @app.route('/dashboard')
 @is_logged_in
 def dashboard():
+    if request.method == 'POST':
+        data = request.get_json()
+        app.logger.info(data)
     cur = mysql.connection.cursor()
     result = cur.execute("SELECT * FROM users WHERE username = %s", [session['username']])
     data = cur.fetchone()
     cur.close()
+    print('Rohan Raj Kansal')
     return render_template('dashboard.html', data=data)
 
 @app.route('/referral_system')
 def referral_system():
     return render_template('referral_system.html')
 
+@app.route('/update',methods=['POST','GET'])
+def update():
+
+    if request.method == 'POST':
+        print('Post Request')
+        data = request.get_json()
+        cur = mysql.connection.cursor()
+        print('Successful Connection!!')
+        print(data)
+        cur.execute('update users set coins = %s where id = %s', (data['coins'],data['id']))
+        mysql.connection.commit()
+        # result = cur.execute('Select * from users where id = %s',[data['id']]) # [] are used if we are using only one value or (value,) making it iterable
+        # print('Extracted Completely!')
+        # final_result = cur.fetchone()
+        cur.close()
+        return redirect(url_for('dashboard'))
+        
 @app.route('/logout')
 @is_logged_in
 def logout():

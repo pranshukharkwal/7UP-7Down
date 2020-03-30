@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
+
+body{
+    font-family: 'Roboto', sans-serif !important;
+    color : white !important;
+    background:url('/static/Dice.svg');
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+    
+}
+.jumbotron{
+    background:rgb(238, 238, 238,0.5) !important;
+    text-align: center !important;
+}
+
+#navbar {
+    margin-bottom: 10vh;
+    height : 50px;
+    width : 100%;
+    background-color: rgb(238, 238, 238,0.6);
+}
+li {
+    
+    padding : 5px;
+    margin : 5px;
+    list-style-type: none;
+    position : relative;
+    float : left;
+    
+}
+#element {
+    font-size : 40px; 
+    background-color: rgb(17, 110, 190) !important;
+}
+#UserData {
+    font-size:30px;
+    color:black !important;
+    opacity:0;
+    transform : translateY(100%);
+    overflow: hidden;  
+    transition : opacity 0.5s , transform 0.5s ease-in; /* This is a way to have multiple transitions or we can have no properties which simply means all.*/
+}/* Transition is used executed whenever there is a change on property of the element.*/
+#navbar:hover #UserData{
+    opacity:1;
+    transform: translateY(0);
+}
+#right {
+    font-size : 40px; 
+    background-color: rgb(17,110,190) !important;
+    padding : 5px;
+    margin : 5px;
+    margin-right:20px;
+    list-style-type: none;
+    position : relative;
+    float : right !important;
+}
+#img {
+    margin-top:2px !important;
+    position : relative;
+    padding : 5px;
+    margin : 15px;
+    float : right;
+    background : url('/static/user.svg');
+    background-repeat: no-repeat;
+    height : 40px;
+    width : 40px;
+    
+}
+
+#coin{
+    margin-top:2px !important;
+    margin-right:8px !important;
+    position : relative;
+    padding : 5px;
+    margin : 15px;
+    float : right;
+    background : url('/static/dollar.svg');
+    background-repeat: no-repeat;
+    height : 40px;
+    width : 40px;
+}
+
+#tooltip{
+    visibility:hidden;
+    display:block;
+    border-radius: 0.5em;
+    text-align: center;
+    height: 40vh;
+    /* width: 40vw; */
+    background-color:rgb(0,0,0,0.85);
+    padding:25px;
+    font-size: 25px;
+    position : absolute;
+    right : 0vh;
+    top : 6vh;
+    transition: 0.5s ease-in;
+    
+}
+
+#img:hover #tooltip{
+    visibility:visible;
+}
+
+.flex-container {
+    display: flex;
+    background-color:none;
+  }
+  
+.flex-container > div {
+    background:red;
+    width: 40%;
+    height: 60vh;
+    margin: 10px;
+    text-align: center;
+    font-size: 25px;
+    overflow:hidden;
+  }
+
+img{
+    height:200px;
+    width:200px;
+}
+
+input{
+    outline: none; /* This property is used to remove the default styling of the input field as seen in chrome*/
+    color:black !important;
+    padding:10px;
+    width:33%;
+    border-radius:1em;
+    border:solid rgb(17,110,190) 2px;
+    transition : 0.5s linear; 
+    font-size:10px;
+    
+}
+input:focus {
+    box-shadow: rgb(0,0,0,0.3) 3px 3px; /*This property is used to add shadow*/
+}
+
+.overlay {
+    position: relative; 
+    padding:10px;
+    top:30px;
+    background: rgba(0, 0, 0, 0.5); /* Black see-through */
+    color: #f1f1f1; 
+    transition: .5s ease;
+    opacity:0;
+    transform: translateY(100%);
+    text-align: center;
+  }
+
+.flex-container > div:hover .overlay {
+    opacity:1;
+    transform: translateY(0);
+}
+
+#first{
+    background:url('/static/7up.jpg');
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+}
+
+#second{
+    background:url('/static/7.jpg');
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+}
+
+#three{
+    background:url('/static/7down.svg');
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+}
+
+.check{
+    text-align:center;
+    position:relative;
+    top:100px;
+}
+
+.selection{
+    position:relative;
+    top:5px;
+    background:blue;
+    /* border:4px red solid; */
+    border-radius:100%;
+    color:blue;
+    font-size:0.55em !important;
+    outline:none;
+    transform: translateY(1100%);
+    transition:1s ease;
+}
+/* .selection:active{
+    background:green;
+    color:green;
+} */
+.flex-container > div:hover .selection{
+    transform:translateY(0);
+}
+.active{
+    background:green;
+    color:green;
+}
+    /* body {
+
+        background-image: url('w3css.gif');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+      }Positioning the image to center and cover of any element */
+
+
+/* Ouline property can be used to have different style color and with od outlines to a element*/

@@ -1,12 +1,194 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hello, {{data.username}}</title>
+        <link rel = 'stylesheet' href = "{{url_for('static',filename='index.css')}}" type = 'text/css'> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script><!-- Including Axios a way to send http requests in javascript in a simple way -->
+    </head>
+    <body>
+        <div id = 'navbar'>
+            <ul>
+                <li id = 'element'>DashBoard</li>
+                <li id = 'right'><a href="{{url_for('logout')}}">Logout</a></li>
+                <li id = 'UserData'>Hello, {{data.username}}</li>
+                <li id = 'img'><div id = 'tooltip'>Username : {{data.username}} <br>Email-ID : {{data.email}} <br> <sapn id = 'usercoins'> Coins : {{data.coins}}<span> </div></li>  
+                <li id = 'coin'></li>
+            </ul>
+            <br><br>
+        </div>
+        <div class='container'>
+            <center>
+            
+            <div class='jumbotron'>
+                <input id='Coins' type="text" placeholder="Coins"><br><br><br>
+                <div class="flex-container">
+                    
+                    <div id = 'first'>
+                        <div class='overlay'>
+                            <b>Instructions:</b><br>
+                            If you chooses this card and the result is same as choosen then 10 coins will be added to your account.
+                        </div>
+                        <div>
+                            <button id = 'one1' class='selection'>C</button>
+                        </div>
+                    </div>
+                    <div id = 'second'>
+                        <div class='overlay'>
+                            <b>Instructions:</b><br>
+                            This is Card that if choose then your money will be doubled. 
+                        </div>
+                        <div >
+                            <button id = 'two2' class='selection'>C</button>
+                        </div>
+                    </div>
+                    <div id = 'three'>
+                        <div class='overlay'>
+                            <b>Intstructions:</b><br>
+                            This option if you will select you and win then 5 Coins will be added to yours coins.
+                        </div>
+                        <div>
+                            <button id = 'three3' class='selection'>C</button>
+                        </div>
+                    </div> 
+                </div><br><br>
+                
+                <img class = 'img-rounded' id = 'dice1' src = '/static/Dice/dado_1.svg'>
+                <img class = 'img-rounded' id = 'dice2' src = '/static/Dice/dado_1.svg'><br><br><br>
+                <button class = 'btn btn-primary btn-lg' onclick="AniDice()">Roll Dice</button>
+                <button class = 'btn btn-primary btn-lg' onclick="stopDice()">Stop</button><br><br><br>
+                <input id='answer' type="text" placeholder="Answer">
+            </div>
+            </center>
+        </div>
+        <script>
+            function AniDice()
+            {
+                myVar=setInterval(rolldice,20)
+                document.querySelector('#answer').value = ''
+            }
+            var array1 = []
+            var array2 = []
 
-{% block body %}
-<div class="jumbotron text-left">
-  <h1>Dashboard</h1>
-  <p> Place content of dashboard script here </p>
-  <li class="list-group-item">Name : {{data.name}}</li>
-  <li class="list-group-item">Username : {{data.username}}</li>
-  <li class="list-group-item">Email : {{data.email}}</li>
-  <li class="list-group-item">Coins : {{data.coins}}</li>
-</div>
-{% endblock %}
+            function rolldice()
+            {
+                let ranNum1 = Math.floor( 1 + Math.random() * 6 );
+                let ranNum2 = Math.floor( 1 + Math.random() * 6 );
+                let dice1 = document.getElementById("dice1");
+                let dice2 = document.getElementById("dice2")
+                dice1.src="/static/Dice/dado_" + ranNum1 + ".svg";
+                dice2.src="/static/Dice/dado_" + ranNum2 + ".svg";
+                array1.push(ranNum1)
+                array2.push(ranNum2)
+
+            } 
+
+            function stopDice()
+            {
+                var usercoin = document.querySelector('#usercoins')
+                var answer = array1[array1.length-1] + array2[array2.length - 1]
+                document.querySelector('#answer').value = answer
+                clearInterval(myVar);
+                var coins = Number(document.getElementsByTagName('input')[0].value)
+                
+                if ((selection===1)){
+                    if (answer>7){
+                        console.log("7UP")
+                        coins = {{data.coins}} + coins
+                        usercoins.innerText = `Coins : ${coins}` }                 
+                    else{
+                        coins = {{data.coins}} - coins
+                        usercoins.innerText = `Coins : ${coins}`
+                    }
+                    
+                }
+                else if(selection == 2){
+                    if (answer==7){
+                        coins = {{data.coins}} + 2*coins
+                        console.log('JACKPOT 7')
+                        usercoins.innerText = `Coins : ${coins}`
+                    }
+                    else{
+                        coins = {{data.coins}} - coins
+                        usercoins.innerText = `Coins : ${coins}`
+                    }
+                }
+                else if(selection == 3 ) {
+                    if (answer<7){
+                        coins = {{data.coins}} + coins
+                        console.log('7DOWN')
+                        usercoins.innerText = `Coins : ${coins}`
+                    }
+                    else{
+                        coins = {{data.coins}} - coins
+                        usercoins.innerText = `Coins : ${coins}`
+                    }
+                }
+                console.log(coins)
+                $.ajax({ // this is the way to send a post request to the server
+                    type: "POST", // type of http request method
+                    contentType: "application/json;charset=utf-8",
+                    url: "/update", // this is in reference to localhost:5000
+                    traditional: "true",
+                    data: JSON.stringify({"id":{{data.id}},"coins" : coins }), // this is necessary
+                    dataType: "json"
+                    //error : function(e){ // This block is used to define error
+                       // console.log(e)
+                   // }
+                    });
+                
+            }
+
+            var selection = undefined;
+
+            var button1 = document.querySelector('#one1')
+            var button2 = document.querySelector('#two2')
+            var button3 = document.querySelector('#three3')
+
+            function b1(){
+                selection = 1
+                console.log(selection)
+                button1.classList.add('active')
+                button2.classList.remove('active')
+                button3.classList.remove('active')
+                
+            }
+
+            function b2(){
+                selection = 2
+                console.log(selection)
+                button1.classList.remove('active')
+                button2.classList.add('active')
+                button3.classList.remove('active')
+            }
+
+            function b3(){
+                selection = 3
+                console.log(selection)
+                button1.classList.remove('active')
+                button2.classList.remove('active')
+                button3.classList.add('active')
+            }
+
+            var input = document.getElementById('Coins')
+            input.onkeyup = function(){
+                console.log('Focused')
+                if (isNaN(this.value) == true){
+                    console.log('value')
+                    this.style.textDecoration = 'line-through'
+                }
+                else{
+                    this.style.textDecoration = 'none'
+                }
+            }
+
+            button1.onclick = (b1)
+            button2.onclick = (b2)
+            button3.onclick = (b3)
+        </script>
+    </body>
+</html>
