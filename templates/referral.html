@@ -1,0 +1,100 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<h1 class='text-primary'> Refer and Earn </h1>
+<div class="jumbotron text-left">
+
+{% if ref_data['referred_by'] != Null and ref_data['referred_by'] != None %}
+
+<fieldset class="scheduler-border">
+<legend> Referred by </legend>
+<p> You have entered the referral code {{ref_data.referred_by}} </p>
+</fieldset>
+
+{% else %}
+
+<fieldset class="scheduler-border">
+<legend> Enter referral code </legend>
+<form method="POST" action="">
+<div class="form-group text-primary">
+<label>Referral Code</label>
+<input type="text" name="ref_by_code" class="form-control" value={{request.form.ref_by_code}}>
+</div>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% endif %}
+
+<hr>
+
+<fieldset class="scheduler-border">
+<legend> Your referral code </legend>
+<p> Your referral code is {{ref_data.referral_code}} </p>
+</fieldset>
+
+<hr>
+
+<fieldset class = "scheduler-border">
+<legend> Your referrals </legend>
+{% if ref_data['referrals'] != Null and ref_data['referrals'] > 0 %}
+<p> You have {{ref_data.referrals}} referrals. Here are the people who have joined using your referral code </p>
+{% for name in names %}
+<li class="list-group-item">{{name.name}}</li>
+{% endfor %}
+
+{% else %}
+<p>You have 0 referrals. Please refer some people to earn free coins</p>
+
+{% endif %}
+</fieldset>
+
+<hr>
+
+<fieldset class = "scheduler-border">
+<legend> Share your referral code </legend>
+{% include 'includes/_social.html'%}
+{% set WA = 'http://wa.me/?text=Hey+%21+Try+this+awesome+7Up+7Down++game.+Get+100+coins+when+you+signup%2C+and+50+more+when+you+enter+this+referral+code+%3A+' + ref_data['referral_code'] + 'Check+out+%3A-+https%3A%2F%2Fthe7up7down.herokuapp.com' %}
+{% set FB = 'https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fthe7up7down.herokuapp.com%2F' %}
+{% set TW = 'https://twitter.com/intent/tweet?url=http%3A%2F%2Fthe7up7down.herokuapp.com%2F&text=Hey%20!%20Try%20this%20awesome%207Up%207Down%20%20game.%20Get%20100%20coins%20when%20you%20signup%2C%20and%2050%20more%20when%20you%20enter%20this%20referral%20code%20%3A%20' + ref_data['referral_code'] + '%20Check%20out%20%3A-%20https%3A%2F%2Fthe7up7down.herokuapp.com' %}
+{% set PI = 'http://pinterest.com/pin/create/button/?url=http%3A%2F%2Fthe7up7down.herokuapp.com%2F&media=https%3A%2F%2Fi.imgur.com%2FC4EG87h.png&description=Hey%20!%20Try%20this%20awesome%207Up%207Down%20%20game.%20Get%20100%20coins%20when%20you%20signup%2C%20and%2050%20more%20when%20you%20enter%20this%20referral%20code%20%3A%20' + ref_data['referral_code'] + '%20Check%20out%20%3A-%20https%3A%2F%2Fthe7up7down.herokuapp.com' %}
+{% set LI = 'http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fthe7up7down.herokuapp.com%2F&title=Hey%20!%20Try%20this%20awesome%207Up%207Down%20%20game.%20Get%20100%20coins%20when%20you%20signup%2C%20and%2050%20more%20when%20you%20enter%20this%20referral%20code%20%3A%20' + ref_data['referral_code'] + '%20Check%20out%20%3A-%20https%3A%2F%2Fthe7up7down.herokuapp.com' %}
+{% set TU = 'http://www.tumblr.com/share?v=3&u=http%3A%2F%2Fthe7up7down.herokuapp.com%2F&t=Hey%20!%20Try%20this%20awesome%207Up%207Down%20%20game.%20Get%20100%20coins%20when%20you%20signup%2C%20and%2050%20more%20when%20you%20enter%20this%20referral%20code%20%3A%20' + ref_data['referral_code'] + '%20Check%20out%20%3A-%20https%3A%2F%2Fthe7up7down.herokuapp.com' %}
+
+<a href="{{WA}}" class="fa fa-whatsapp"></a>
+<a href="{{FB}}" class="fa fa-facebook"></a>
+<a href="{{TW}}" class="fa fa-twitter"></a>
+<a href="{{PI}}" class="fa fa-pinterest"></a>
+<a href="{{LI}}" class="fa fa-linkedin"></a>
+<a href="{{TU}}" class="fa fa-tumblr"></a>
+
+</fieldset>
+
+
+<style>
+
+fieldset
+{
+border: 1px solid #ddd !important;
+margin: 0;
+xmin-width: 0;
+padding: 10px;
+position: relative;
+border-radius:4px;
+background-color:#f5f5f5;
+padding-left:10px!important;
+}
+
+legend
+{
+font-size:14px;
+font-weight:bold;
+margin-bottom: 0px;
+width: 35%;
+border: 1px solid #ddd;
+border-radius: 4px;
+padding: 5px 5px 5px 10px;
+background-color: #ffffff;
+}
+
+</style>
+{% endblock %}
