@@ -1,23 +1,77 @@
-{% extends 'layout.html' %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Leaderboard</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link rel='stylesheet' href='static/leader.css'>
+	</head>
+	<body>
+		<div class='jumbotrom text-center'>
+			<h1> Welcome To the Learderboard,{{" "+session['username']}}</h1>
+            {% if data.index(user) < 10 %}
+                <h2>Congratulations You are in TOP 10!!!</h2>
+            {% else %}
+                <button id='seepos'>See your Position</button>
+                <h2 id='hidden'> Your Position is {{data.index(user) + 1}} </h2>
 
-{% block body %}
-<h1 class="text-primary"> Leaderboard </h1>
-<div class="jumbotron text-left">
+            {% endif %}
+        </div>
+        <br>
+		<h1>LeaderBoard</h1>
+        <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+            <thead>
+            
+                <tr class = 'success'>
+                    <th>Serial Number </th>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>Coins</th>
+                </tr>
+            </thead>
+            </table>
+        </div>
+          <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+            <tbody>
+                
+            <!-- We can use almost any python function inside jinja template inclusding the list.index() -->
+			{% for i in range(10) %}
+                {% if data[i].username == session['username'] %} <!--Here Each i is a dictionary-->
+                    <tr class= 'info'>
+                        
+                        <td>{{loop.index}}</td> <!--loop.index starts at 1 and keeps on increasing-->
+                        <td>{{data[i].username + " Logged in"}}</td>
+                        <td>{{data[i].email}}</td>
+                        <td>{{data[i].name}}</td>
+                        <td>{{data[i].coins}}</td>
+                    </tr>
+                {% else %}
+                    <tr class= 'success'>
+                        
+                        <td>{{loop.index}}</td> <!--loop.index starts at 1 and keeps on increasing-->
+                        <td>{{data[i].username}}</td>  
+                        <td>{{data[i].email}}</td>
+                        <td>{{data[i].name}}</td>
+                        <td>{{data[i].coins}}</td>
+                    </tr>
+                {% endif %}
+			{% endfor %}
+            <tr id='hidden1' class='info'>
+                    <td>{{data.index(user)+1}}</td>
+                    <td>{{user.username}}</td>  
+                    <td>{{user.email}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.coins}}</td>
+                </tr>
+           </thead>     
+		</table>
 
-<table class="table table-striped">
-<tr>
-<th> Name </th>
-<th> Username </th>
-<th> Coins </th>
-</tr>
-
-{% for item in data %}
-<tr>
-<td>{{item.name}}</td>
-<td>{{item.username}}</td>
-<td>{{item.coins}}</td>
-</tr>
-{% endfor %}
-</table>
-</div>
-{% endblock %}
+	</div>
+    <script src='static/leader.js'></script>
+	</body>
+</html>
