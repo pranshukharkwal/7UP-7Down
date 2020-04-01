@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html>
-	<head>
-		<title>Leaderboard</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <link rel='stylesheet' href='static/leader.css'>
-	</head>
-	<body>
+
+{% extends 'layout.html' %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="static/leader.css" />
+{% endblock %}
+    {% block body %}
 		<div class='jumbotrom text-center'>
 			<h1> Welcome To the Learderboard,{{" "+session['username']}}</h1>
             {% if data.index(user) < 10 %}
@@ -21,23 +16,16 @@
         </div>
         <br>
 		<h1>LeaderBoard</h1>
-        <div class="tbl-header">
+        <div style ="overflow-x:auto;">
             <table cellpadding="0" cellspacing="0" border="0">
-            <thead>
             
-                <tr class = 'success'>
+                <tr>
                     <th>Serial Number </th>
                     <th>User Name</th>
                     <th>Email</th>
                     <th>Name</th>
                     <th>Coins</th>
                 </tr>
-            </thead>
-            </table>
-        </div>
-          <div class="tbl-content">
-            <table cellpadding="0" cellspacing="0" border="0">
-            <tbody>
                 
             <!-- We can use almost any python function inside jinja template inclusding the list.index() -->
 			{% for i in range(10) %}
@@ -67,11 +55,8 @@
                     <td>{{user.email}}</td>
                     <td>{{user.name}}</td>
                     <td>{{user.coins}}</td>
-                </tr>
-           </thead>     
+                </tr>   
 		</table>
-
-	</div>
+        </div>
     <script src='static/leader.js'></script>
-	</body>
-</html>
+    {% endblock %}
