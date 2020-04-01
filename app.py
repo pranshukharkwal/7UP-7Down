@@ -216,7 +216,6 @@ def update():
 @app.route('/leaderboard')
 def leaderboard():
     cur = mysql.connection.cursor()
-<<<<<<< HEAD
     result = cur.execute("SELECT name, username, email, coins FROM users Order By coins Desc")
     data = cur.fetchall()
     result1 = cur.execute("Select name, username, email, coins from users where username = %s",[session['username']])
@@ -227,15 +226,6 @@ def leaderboard():
     cur.close()
     return render_template('leaderboard.html', data=data, user = logged_in)
 
-=======
-    result = cur.execute('select * from users')
-    data = list(cur.fetchall())
-    data.sort(key = lambda x: x['coins'] , reverse=True)
-    if len(data) > 10:
-        data = data[0:10]
-
-    return render_template('leaderboard.html' , data=data)
->>>>>>> 084388bc9c13fd46977108b82cae189303604984
 
 @app.route('/logout')
 @is_logged_in
