@@ -119,6 +119,19 @@ def update():
         cur.close()
         return redirect(url_for('dashboard'))
 
+@app.route('/leaderboard')
+def leaderboard():
+    cur = mysql.connection.cursor()
+    result = cur.execute("SELECT name, username, email, coins FROM users Order By coins Desc")
+    data = cur.fetchall()
+    result1 = cur.execute("Select name, username, email, coins from users where username = %s",[session['username']])
+    logged_in = cur.fetchone()
+    # fetchmany(number of rows) fetches number of rows
+    # fetchone() fetches one row
+    # fetchall() fetchall rows from the result
+    cur.close()
+    return render_template('leaderboard.html', data=data, user = logged_in)
+
 
 @app.route('/logout')
 @is_logged_in
@@ -130,6 +143,7 @@ def logout():
 @app.route('/about')
 def about():
     return render_template('about.html')
+
 
 if __name__ == '__main__':
     app.run(debug = True)

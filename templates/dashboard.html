@@ -14,10 +14,11 @@
         <div id = 'navbar'>
             <ul>
                 <li id = 'element'>DashBoard</li>
+                <li id = 'element'><a href= "{{url_for('leaderboard')}}">Leaderboard</a>
                 <li id = 'right'><a href="{{url_for('logout')}}">Logout</a></li>
                 <li id = 'UserData'>Hello, {{data.username}}</li>
-                <li id = 'img'><div id = 'tooltip'>Username : {{data.username}} <br>Email-ID : {{data.email}} <br> <sapn id = 'usercoins'> Coins : {{data.coins}}<span> </div></li>  
-                <li id = 'coin'></li>
+                <li id = 'img'><div id = 'tooltip'>Username : {{data.username}} <br>Email-ID : {{data.email}} </div></li>  
+                <li id = 'coin'><div id = 'tooltip1'>Coins : {{data.coins}}</div></li>
             </ul>
             <br><br>
         </div>
@@ -190,5 +191,6 @@
             button2.onclick = (b2)
             button3.onclick = (b3)
         </script>
+        {% include 'includes/_footer.html' %}
     </body>
 </html>
