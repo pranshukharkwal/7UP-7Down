@@ -11,43 +11,29 @@
 
 h1{
     font-size: 30px;
-    color: #fff;
     text-transform: uppercase;
     font-weight: 300;
     text-align: center;
     margin-bottom: 15px;
   }
-  table{
-    width:100%;
-    table-layout: fixed;
-  }
-  .tbl-header{
-    background-color: rgba(255,255,255,0.3);
-   }
-  .tbl-content{
-    
-    height:400px;
-    overflow-x:auto;
-    margin-top: 0px;
-    border: 1px solid rgba(255,255,255,0.3);
-  }
-  th{
-    padding: 20px 15px;
-    text-align: left;
-    font-weight: 500;
-    font-size: 20px;
-    color: #fff;
-    text-transform: uppercase;
-  }
-  td{
-    padding: 15px;
-    text-align: left;
-    vertical-align:middle;
-    font-weight: 200;
-    font-size: 18px;
-    color: #fff;
-    border-bottom: solid 1px rgba(255,255,255,0.1);
-  }
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  /* border: 1px solid #ddd; */
+}
+
+th, td {
+  font-size: 1.6em;
+  text-align: left;
+  padding: 8px;
+}
+th{
+  background-color:rgb(128, 128, 128,0.5);
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+  
   .info{
     background-color: rgb(0,255,0,0.8) !important;
   }
@@ -56,9 +42,8 @@ h1{
   
   @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
   body{
-    background: -webkit-linear-gradient(left, #25c481, #25b7c4);
-    background: linear-gradient(to right, #25c481, #25b7c4);
     font-family: 'Roboto', sans-serif;
+    
   }
   section{
     margin: 50px;
@@ -78,7 +63,7 @@ h1{
 }
 
 h2{
-    color:#FF7F50;
+    color:#FF7F50 !important;
     text-decoration-line: overline underline;
     text-decoration-style: double;
 }
