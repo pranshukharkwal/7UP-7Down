@@ -5,17 +5,21 @@
 {% endblock %}
     {% block body %}
 		<div class='jumbotrom text-center'>
-			<h1> Welcome To the Learderboard,{{" "+session['username']}}</h1>
-            {% if data.index(user) < 10 %}
-                <h2>Congratulations You are in TOP 10!!!</h2>
-            {% else %}
-                <button id='seepos'>See your Position</button>
-                <h2 id='hidden'> Your Position is {{data.index(user) + 1}} </h2>
+            {% if session.logged_in %}
+                <h1> Welcome To the Learderboard,{{" "+session['username']}}</h1>
+                {% if data.index(user) < 10 %}
+                    <h2>Congratulations You are in TOP 10!!!</h2>
+                {% else %}
+                    <button id='seepos'>See your Position</button>
+                    <h2 id='hidden'> Your Position is {{data.index(user) + 1}} </h2>
 
+                {% endif %}
+            {% else %}
+                <h1> Welcome To the Learderboard, Guest</h1>
             {% endif %}
         </div>
         <br>
-		<h1>LeaderBoard</h1>
+		<h1>LeaderBoard</h1><br>
         <div style ="overflow-x:auto;">
             <table cellpadding="0" cellspacing="0" border="0">
             
@@ -33,7 +37,7 @@
                     <tr class= 'info'>
                         
                         <td>{{loop.index}}</td> <!--loop.index starts at 1 and keeps on increasing-->
-                        <td>{{data[i].username + " Logged in"}}</td>
+                        <td>{{data[i].username}}</td>
                         <td>{{data[i].email}}</td>
                         <td>{{data[i].name}}</td>
                         <td>{{data[i].coins}}</td>
@@ -49,13 +53,15 @@
                     </tr>
                 {% endif %}
 			{% endfor %}
-            <tr id='hidden1' class='info'>
-                    <td>{{data.index(user)+1}}</td>
-                    <td>{{user.username}}</td>  
-                    <td>{{user.email}}</td>
-                    <td>{{user.name}}</td>
-                    <td>{{user.coins}}</td>
-                </tr>   
+            {% if session.logged_in%}
+                <tr id='hidden1' class='info'>
+                        <td>{{data.index(user)+1}}</td>
+                        <td>{{user.username}}</td>  
+                        <td>{{user.email}}</td>
+                        <td>{{user.name}}</td>
+                        <td>{{user.coins}}</td>
+                    </tr>
+            {% endif %}   
 		</table>
         </div>
     <script src='static/leader.js'></script>

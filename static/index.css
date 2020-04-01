@@ -30,7 +30,7 @@ li {
     
 }
 #element {
-    font-size : 40px; 
+    font-size : 25px; 
     background-color: rgb(17, 110, 190) !important;
 }
 #UserData {
@@ -46,7 +46,7 @@ li {
     transform: translateY(0);
 }
 #right {
-    font-size : 40px; 
+    font-size :25px; 
     background-color: rgb(17,110,190) !important;
     padding : 5px;
     margin : 5px;
