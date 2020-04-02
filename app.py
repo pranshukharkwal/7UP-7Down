@@ -84,7 +84,8 @@ def login():
             if sha256_crypt.verify(password_candidate, password):
                 session['logged_in'] = True
                 session['username'] = username
-
+                session['email'] = data['email']
+                session['coins'] = data['coins']
                 flash('You are now logged in' , 'success')
                 return redirect(url_for('dashboard'))
             else:

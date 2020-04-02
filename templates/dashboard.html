@@ -9,6 +9,7 @@
 {% block body %}
             <div class='jumbotron'>
                 <input id='Coins' type="text" placeholder="Coins"><br><br><br>
+                <div id = 'error' class='alert alert-danger'>Please Enter a Valid Number of Coins.</div><br>
                 <div class="flex-container">
                     
                     <div id = 'first'>
@@ -42,15 +43,28 @@
                 
                 <img class = 'img-rounded' id = 'dice1' src = '/static/Dice/dado_1.svg'>
                 <img class = 'img-rounded' id = 'dice2' src = '/static/Dice/dado_1.svg'><br><br><br>
-                <button class = 'btn btn-primary btn-lg' onclick="AniDice()">Roll Dice</button>
-                <button class = 'btn btn-primary btn-lg' onclick="stopDice()">Stop</button><br><br><br>
-                <input id='answer' type="text" placeholder="Answer">
+                <button id='roll' class = 'btn btn-primary btn-lg' onclick="AniDice()">Roll Dice</button>
+                <button id = 'stop' class = 'btn btn-primary btn-lg' onclick="stopDice()">Stop</button><br><br><br>
+                
+                <input id='answer' type="text" placeholder="Answer" disabled><br><br>
+                <div id = 'message' class='alert alert-success'></div>
         </div>
+        <p id = "usercoins"></p>
         <script>
+            document.getElementById('stop').disabled = true
+            document.getElementById('roll').disabled = true
             function AniDice()
             {
-                myVar=setInterval(rolldice,20)
-                document.querySelector('#answer').value = ''
+                if (selection){
+                    myVar=setInterval(rolldice,20)
+                    document.querySelector('#answer').value = ''
+                    document.getElementById('message').innerText = ""
+                    document.getElementById('message').style.visibility = 'hidden'
+                }
+                else{
+                    document.getElementById('message').style.visibility = 'visible'
+                    document.getElementById('message').innerText = "Please Make a Valid Selection!!"
+                }
             }
             var array1 = []
             var array2 = []
@@ -70,59 +84,77 @@
 
             function stopDice()
             {
-                var usercoin = document.querySelector('#usercoins')
-                var answer = array1[array1.length-1] + array2[array2.length - 1]
-                document.querySelector('#answer').value = answer
                 clearInterval(myVar);
+                var usercoins = document.querySelector('#usercoins')
                 var coins = Number(document.getElementsByTagName('input')[0].value)
-                
-                if ((selection===1)){
-                    if (answer>7){
-                        console.log("7UP")
-                        coins = {{data.coins}} + coins
-                        usercoins.innerText = `Coins : ${coins}` }                 
-                    else{
-                        coins = {{data.coins}} - coins
-                        usercoins.innerText = `Coins : ${coins}`
+                if (coins > {{data.coins}}){
+                    alert('Please Enter Valid Number of coins!!')
+                }
+                else{
+                    var answer = array1[array1.length-1] + array2[array2.length - 1]
+                    document.querySelector('#answer').value = answer
+                    
+                    if ((selection===1)){
+                        if (answer>7){
+                            console.log("7UP")
+                            coins = {{data.coins}} + coins
+                            usercoins.innerText = `Coins : ${coins}`
+                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').innerHTML = `🤑 Congratulations You Won this Roll!! <br> Coins : ${coins}`
+                            }                 
+                        else{
+                            coins = {{data.coins}} - coins
+                            usercoins.innerText = `Coins : ${coins}`
+                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').innerHTML = `😫 Sorry, You have lost this Roll, BETTER LUCK NEXT TIME!! <br> Coins : ${coins}`
+                        }
+                        
+                    }
+                    else if(selection == 2){
+                        if (answer==7){
+                            coins = {{data.coins}} + 2*coins
+                            console.log('JACKPOT 7')
+                            usercoins.innerText = `Coins : ${coins}`
+                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').innerHTML = `🤑 Congratulations You have won a <b>JACKPOT</b>!! 🤑 <br> Coins : ${coins}`
+                        }
+                        else{
+                            coins = {{data.coins}} - coins
+                            usercoins.innerText = `Coins : ${coins}`
+                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').innerHTML = `😫 Sorry, You have lost this Roll, BETTER LUCK NEXT TIME!! <br> Coins : ${coins}`
+                        }
+                    }
+                    else if(selection == 3 ) {
+                        if (answer<7){
+                            coins = {{data.coins}} + coins
+                            console.log('7DOWN')
+                            usercoins.innerText = `Coins : ${coins}`
+                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').innerHTML = `🤑 Congratulations You Won this Roll!! <br> Coins : ${coins}`
+                        }
+                        else{
+                            coins = {{data.coins}} - coins
+                            usercoins.innerText = `Coins : ${coins}`
+                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').innerHTML = `😫 Sorry, You have lost this Roll, BETTER LUCK NEXT TIME!! <br> Coins : ${coins}`
+                        }
+                    }
+                        console.log(coins)
+                        $.ajax({ // this is the way to send a post request to the server
+                            type: "POST", // type of http request method
+                            contentType: "application/json;charset=utf-8",
+                            url: "/update", // this is in reference to localhost:5000
+                            traditional: "true",
+                            data: JSON.stringify({"id":{{data.id}},"coins" : coins }), // this is necessary
+                            dataType: "json"
+                            //error : function(e){ // This block is used to define error
+                            // console.log(e)
+                        // }
+                        });
                     }
                     
-                }
-                else if(selection == 2){
-                    if (answer==7){
-                        coins = {{data.coins}} + 2*coins
-                        console.log('JACKPOT 7')
-                        usercoins.innerText = `Coins : ${coins}`
-                    }
-                    else{
-                        coins = {{data.coins}} - coins
-                        usercoins.innerText = `Coins : ${coins}`
-                    }
-                }
-                else if(selection == 3 ) {
-                    if (answer<7){
-                        coins = {{data.coins}} + coins
-                        console.log('7DOWN')
-                        usercoins.innerText = `Coins : ${coins}`
-                    }
-                    else{
-                        coins = {{data.coins}} - coins
-                        usercoins.innerText = `Coins : ${coins}`
-                    }
-                }
-                console.log(coins)
-                $.ajax({ // this is the way to send a post request to the server
-                    type: "POST", // type of http request method
-                    contentType: "application/json;charset=utf-8",
-                    url: "/update", // this is in reference to localhost:5000
-                    traditional: "true",
-                    data: JSON.stringify({"id":{{data.id}},"coins" : coins }), // this is necessary
-                    dataType: "json"
-                    //error : function(e){ // This block is used to define error
-                       // console.log(e)
-                   // }
-                    });
-                
-            }
+             }
 
             var selection = undefined;
 
@@ -160,10 +192,20 @@
                 console.log('Focused')
                 if (isNaN(this.value) == true){
                     console.log('value')
-                    this.style.textDecoration = 'line-through'
+                    document.getElementById('error').style.display = 'block';
                 }
                 else{
-                    this.style.textDecoration = 'none'
+                    if (Number(this.value) > {{data.coins}} || Number(this.value) == 0) {
+                        document.getElementById('error').style.visibility = 'visible';
+                        document.getElementById('stop').disabled = true;
+                        document.getElementById('roll').disabled = true;
+                    }
+                    else if(Number(this.value) < {{data.coins}}){
+                        console.log('Success!!')
+                        document.getElementById('error').style.visibility = 'hidden';
+                        document.getElementById('stop').disabled = false;
+                        document.getElementById('roll').disabled = false;
+                    }
                 }
             }
 
