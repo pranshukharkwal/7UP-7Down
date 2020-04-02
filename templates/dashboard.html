@@ -1,31 +1,12 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Hello, {{data.username}}</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+{% extends 'layout.html' %}
+{% block css%}
+<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale = 0.0, min-scale = 1.0" >
         <link rel = 'stylesheet' href = "{{url_for('static',filename='index.css')}}" type = 'text/css'> 
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script><!-- Including Axios a way to send http requests in javascript in a simple way -->
-    </head>
-    <body>
-        <div id = 'navbar'>
-            <ul>
-                <li id = 'element'>DashBoard</li>
-                <li id = 'element'><a href= "{{url_for('leaderboard')}}">Leaderboard</a>
-                <li id = 'right'><a href="{{url_for('logout')}}">Logout</a></li>
-                <li id = 'UserData'>Hello, {{data.username}}</li>
-                <li id = 'img'><div id = 'tooltip'>Username : {{data.username}} <br>Email-ID : {{data.email}} </div></li>  
-                <li id = 'coin'><div id = 'tooltip1'>Coins : {{data.coins}}</div></li>
-            </ul>
-            <br><br>
-        </div>
-        <div class='container'>
-            <center>
-            
+{% endblock %}
+{% block body %}
             <div class='jumbotron'>
                 <input id='Coins' type="text" placeholder="Coins"><br><br><br>
                 <div class="flex-container">
@@ -64,8 +45,6 @@
                 <button class = 'btn btn-primary btn-lg' onclick="AniDice()">Roll Dice</button>
                 <button class = 'btn btn-primary btn-lg' onclick="stopDice()">Stop</button><br><br><br>
                 <input id='answer' type="text" placeholder="Answer">
-            </div>
-            </center>
         </div>
         <script>
             function AniDice()
@@ -192,6 +171,4 @@
             button2.onclick = (b2)
             button3.onclick = (b3)
         </script>
-        {% include 'includes/_footer.html' %}
-    </body>
-</html>
+{% endblock%}
