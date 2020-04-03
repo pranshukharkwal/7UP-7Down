@@ -47,7 +47,7 @@
                 <button id = 'stop' class = 'btn btn-primary btn-lg' onclick="stopDice()">Stop</button><br><br><br>
                 
                 <input id='answer' type="text" placeholder="Answer" disabled><br><br>
-                <div id = 'message' class='alert alert-success'></div>
+                <div id = 'message' class='alert alert-success'>Hello</div>
         </div>
         <p id = "usercoins"></p>
         <script>
@@ -59,10 +59,12 @@
                     myVar=setInterval(rolldice,20)
                     document.querySelector('#answer').value = ''
                     document.getElementById('message').innerText = ""
-                    document.getElementById('message').style.visibility = 'hidden'
+                    document.getElementById('message').style.opacity = "0"
+                    document.getElementById('stop').disabled = false;
+                    document.getElementById('roll').disabled = true;
                 }
                 else{
-                    document.getElementById('message').style.visibility = 'visible'
+                    document.getElementById('message').style.opacity = "1"
                     document.getElementById('message').innerText = "Please Make a Valid Selection!!"
                 }
             }
@@ -84,6 +86,8 @@
 var initial_coins = {{data.coins}}
             function stopDice()
             {
+                document.getElementById('stop').disabled = true;
+                document.getElementById('roll').disabled = false;
                 clearInterval(myVar);
                 var usercoins = document.querySelector('#usercoins')
                 var coins = Number(document.getElementsByTagName('input')[0].value)
@@ -100,14 +104,16 @@ var initial_coins = {{data.coins}}
                             console.log("7UP")
                             coins = initial_coins + coins
                             usercoins.innerText = `Coins : ${coins}`
-                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').style.opacity = "1"
+                            document.getElementById('message').style.transform = 'rotate(0deg)'
                             document.getElementById('message').innerHTML = `🤑 Congratulations You Won this Roll!! <br> Coins : ${coins}`
                             initial_coins = coins
                             }                 
                         else{
                             coins = initial_coins - coins
                             usercoins.innerText = `Coins : ${coins}`
-                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').style.opacity = "1"
+                            document.getElementById('message').style.transform = 'rotate(0deg)'
                             document.getElementById('message').innerHTML = `😫 Sorry, You have lost this Roll, BETTER LUCK NEXT TIME!! <br> Coins : ${coins}`
                             intitial_coins = coins
                         }
@@ -118,14 +124,16 @@ var initial_coins = {{data.coins}}
                             coins = initial_coins + 2*coins
                             console.log('JACKPOT 7')
                             usercoins.innerText = `Coins : ${coins}`
-                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').style.opacity = "1"
+                            document.getElementById('message').style.transform = 'rotate(0deg)'
                             document.getElementById('message').innerHTML = `🤑 Congratulations You have won a <b>JACKPOT</b>!! 🤑 <br> Coins : ${coins}`
                             initial_coins = coins
                         }
                         else{
                             coins = initial_coins - coins
                             usercoins.innerText = `Coins : ${coins}`
-                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').style.opacity = "1"
+                            document.getElementById('message').style.transform = 'rotate(0deg)'
                             document.getElementById('message').innerHTML = `😫 Sorry, You have lost this Roll, BETTER LUCK NEXT TIME!! <br> Coins : ${coins}`
                             intitial_coins = coins
                         }
@@ -135,14 +143,16 @@ var initial_coins = {{data.coins}}
                             coins = initial_coins + coins
                             console.log('7DOWN')
                             usercoins.innerText = `Coins : ${coins}`
-                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').style.opacity = "1"
+                            document.getElementById('message').style.transform = 'rotate(0deg)'
                             document.getElementById('message').innerHTML = `🤑 Congratulations You Won this Roll!! <br> Coins : ${coins}`
                             initial_coins = coins
                         }
                         else{
                             coins = initial_coins - coins
                             usercoins.innerText = `Coins : ${coins}`
-                            document.getElementById('message').style.visibility = 'visible'
+                            document.getElementById('message').style.opacity = "1"
+                            document.getElementById('message').style.transform = 'rotate(0deg)'
                             document.getElementById('message').innerHTML = `😫 Sorry, You have lost this Roll, BETTER LUCK NEXT TIME!! <br> Coins : ${coins}`
                             initial_coins = coins
                         }
@@ -199,18 +209,18 @@ var initial_coins = {{data.coins}}
                 console.log('Focused')
                 if (isNaN(this.value) == true){
                     console.log('value')
-                    document.getElementById('error').style.display = 'block';
+                    document.getElementById('error').style.opacity = "1";
+                    document.getElementById('roll').disabled = true
                 }
                 else{
                     if (Number(this.value) > {{data.coins}} || Number(this.value) == 0) {
-                        document.getElementById('error').style.visibility = 'visible';
+                        document.getElementById('error').style.opacity = "1";
                         document.getElementById('stop').disabled = true;
                         document.getElementById('roll').disabled = true;
                     }
                     else if(Number(this.value) < {{data.coins}}){
                         console.log('Success!!')
-                        document.getElementById('error').style.visibility = 'hidden';
-                        document.getElementById('stop').disabled = false;
+                        document.getElementById('error').style.opacity = "0";
                         document.getElementById('roll').disabled = false;
                     }
                 }
