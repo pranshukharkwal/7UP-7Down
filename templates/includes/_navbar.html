@@ -25,9 +25,19 @@
               <li><a href="/dashboard">Dashboard</a></li>
               <li><a href="/referral">Refer and Earn</a></li>
               <li><a href="/logout">Logout</a></li>
+              <li class="dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Profile</a>
+                  <div class="dropdown-menu">
+                      <ul style = "color: #e11b22; list-style : none; padding: 10px; text-align:center; font-size:1.5em">
+                        <li>Username : {{session['username']}}</li>
+                        <li>{{session['email']}}</li>
+                      </ul>
+                  </div>
+              </li>
             {% else %}
               <li><a href="/register">Register</a></li>
               <li><a href="/login">Login</a></li>
+
             {% endif %}
 
           </ul>
