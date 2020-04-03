@@ -35,7 +35,6 @@
 			{% for i in range(10) %}
                 {% if data[i].username == session['username'] %} <!--Here Each i is a dictionary-->
                     <tr class= 'info'>
-                        
                         <td>{{loop.index}}</td> <!--loop.index starts at 1 and keeps on increasing-->
                         <td>{{data[i].username}}</td>
                         <td>{{data[i].email}}</td>
@@ -43,7 +42,7 @@
                         <td>{{data[i].coins}}</td>
                     </tr>
                 {% else %}
-                    <tr class= 'success'>
+                    <tr>
                         
                         <td>{{loop.index}}</td> <!--loop.index starts at 1 and keeps on increasing-->
                         <td>{{data[i].username}}</td>  
