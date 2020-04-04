@@ -8,6 +8,7 @@
 {% endblock %}
 {% block body %}
             <div class='jumbotron'>
+                <img src="/static/dollar.svg" style = "height:40px; width:40px">&nbsp;<span style = "font-size:1.75em" id="usercoins"> {{data.coins}}</span><br><br>
                 <input id='Coins' type="text" placeholder="Coins"><br><br><br>
                 <div id = 'error' class='alert alert-danger'>Please Enter a Valid Number of Coins.</div><br>
                 <div class="flex-container">
@@ -49,7 +50,6 @@
                 <input id='answer' type="text" placeholder="Answer" disabled><br><br>
                 <div id = 'message' class='alert alert-success'>Hello</div>
         </div>
-        <p id = "usercoins">{{data.coins}}</p>
         <script>
             document.getElementById('stop').disabled = true
             document.getElementById('roll').disabled = true
@@ -92,10 +92,7 @@ var initial_coins = {{data.coins}}
                 clearInterval(myVar);
                 var coins = Number(document.getElementsByTagName('input')[0].value)
                 
-                if (coins > {{data.coins}}){
-                    alert('Please Enter Valid Number of coins!!')
-                }
-                else{
+                
                     var answer = array1[array1.length-1] + array2[array2.length - 1]
                     document.querySelector('#answer').value = answer
                     
@@ -169,9 +166,8 @@ var initial_coins = {{data.coins}}
                             // console.log(e)
                         // }
                         });
-                    }
                     
-             }
+            }
 
             var selection = undefined;
 
